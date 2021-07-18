@@ -10,6 +10,20 @@ if TM_SDK_DIR == nil then
     os.exit(-1)
 end
 
+if os.isfile( TM_SDK_DIR .. "/headers") == false then 
+    print("Detected Dev version of TM SDK")
+    TM_SDK_IS_DEV = true
+end
+
+-- Do we figure out if this is a Dev folder of Release folder
+if TM_SDK_IS_DEV then 
+    tm_header_paths={ TM_SDK_DIR }
+    tm_header_files={ TM_SDK_DIR .. "/foundation/**.h", TM_SDK_DIR .. "/the_machinery/**.h", TM_SDK_DIR .. "/utils/**.h" }
+else
+    tm_header_paths=TM_SDK_DIR .. "/headers"
+    tm_header_files={ TM_SDK_DIR .. "/**.h"}
+end
+
 function standard_config()
     
     newoption {
@@ -42,7 +56,7 @@ function standard_config()
 
     filter "platforms:Win64"
         defines { "TM_OS_WINDOWS", "_CRT_SECURE_NO_WARNINGS" }
-        includedirs { TM_SDK_DIR .. "/headers" }
+        includedirs(tm_header_paths)
         staticruntime "On"
         architecture "x64"
         prebuildcommands {
@@ -65,7 +79,7 @@ function standard_config()
 
     filter {"platforms:Linux"}
         defines { "TM_OS_LINUX", "TM_OS_POSIX" }
-        includedirs { TM_SDK_DIR .. "/headers" }
+        includedirs(tm_header_paths)
         architecture "x64"
         toolset "clang"
         buildoptions {

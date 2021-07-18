@@ -7,3 +7,5 @@ project "custom_simulate_entry"
     language "C++"
     files {"*.inl", "*.h", "*.c"}
     sysincludedirs { "" }
+
+    files(tm_header_paths)

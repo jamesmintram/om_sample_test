@@ -12,4 +12,4 @@ project "custom_tab"
     files {"*.inl", "*.h", "*.c"}
     sysincludedirs { "" }
 
-    files { TM_SDK_DIR .. "/headers/**.h" }
+    files(tm_header_paths)

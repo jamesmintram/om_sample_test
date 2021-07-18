@@ -43,7 +43,7 @@ static void tab__ui(tm_tab_o* tab, tm_ui_o* ui, const tm_ui_style_t* uistyle_in,
         .w = rect.w - 20,
         .h = rect.h - 20
     };
-    style->color = (tm_color_srgb_t){ .a = 255, .b = 100, .r = 100,  .g = 100 };
+    style->color = (tm_color_srgb_t){ .a = 255, .b = 50, .r = 50,  .g = 50 };
     tm_draw2d_api->fill_rect(uib.vbuffer, *uib.ibuffers, style, subrect);
 
     subrect.h = 30;

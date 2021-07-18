@@ -1,6 +1,6 @@
 __type: "tm_plugin"
 __uuid: "be522976-049c-39f6-49bb-45d5b5666b76"
 import_on_change: true
-windows_dll_import_path: "C:\\gamedev\\machinery\\next_hex\\plugins\\custom_tab\\bin\\Debug\\tm_custom_tab.dll"
-windows_dll: "c2d7424bcf1ef812"
+windows_dll_import_path: "C:\\gamedev\\machinery\\next_hex\\plugins\\build\\bin\\Debug\\tm_custom_tab.dll"
+windows_dll: "0c68d69910234294"
 __asset_uuid: "31c90365-fe32-3ad4-5d2c-f33e7d6f9026"

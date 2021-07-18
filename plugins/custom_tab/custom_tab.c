@@ -2,9 +2,11 @@ static struct tm_api_registry_api* tm_global_api_registry;
 
 static struct tm_draw2d_api* tm_draw2d_api;
 static struct tm_ui_api* tm_ui_api;
+static struct tm_logger_api* tm_logger_api;
 
 #include <foundation/allocator.h>
 #include <foundation/api_registry.h>
+#include <foundation/log.h>
 
 #include <plugins/ui/docking.h>
 #include <plugins/ui/draw2d.h>
@@ -29,10 +31,10 @@ static void tab__ui(tm_tab_o* tab, tm_ui_o* ui, const tm_ui_style_t* uistyle_in,
 {
     tm_ui_buffers_t uib = tm_ui_api->buffers(ui);
     tm_ui_style_t* uistyle = (tm_ui_style_t[]){ *uistyle_in };
-    tm_draw2d_style_t* style = &(tm_draw2d_style_t){ 0 };
+    tm_draw2d_style_t* style = &(tm_draw2d_style_t) { 0 };
     tm_ui_api->to_draw_style(ui, style, uistyle);
 
-    style->color = (tm_color_srgb_t){ .a = 255, .b = 255 };
+    style->color = (tm_color_srgb_t){ .a = 255, .r = 255 };
     tm_draw2d_api->fill_rect(uib.vbuffer, *uib.ibuffers, style, rect);
 
     tm_rect_t subrect = {
@@ -41,8 +43,21 @@ static void tab__ui(tm_tab_o* tab, tm_ui_o* ui, const tm_ui_style_t* uistyle_in,
         .w = rect.w - 20,
         .h = rect.h - 20
     };
-    style->color = (tm_color_srgb_t){ .a = 255, .g = 255 };
+    style->color = (tm_color_srgb_t){ .a = 255, .b = 100, .r = 100,  .g = 100 };
     tm_draw2d_api->fill_rect(uib.vbuffer, *uib.ibuffers, style, subrect);
+
+    subrect.h = 30;
+    subrect.x += 20;
+    subrect.w -= 40;
+
+    for (int btn = 0; btn < 10; btn++)
+    {
+        subrect.y += 40;
+	    if (tm_ui_api->button(ui, uistyle, &(tm_ui_button_t){.rect = subrect, .text = "Click Me", .tooltip = "Click me once" })) {
+            // tm_ui_api->label(ui, uistyle, &(tm_ui_label_t){.rect = subrect, .text = "Some cool text" });
+            tm_logger_api->printf(TM_LOG_TYPE_INFO, "Hello World!\n");
+	    }
+    }	
 }
 
 static const char* tab__create_menu_name(void)
@@ -97,6 +112,7 @@ TM_DLL_EXPORT void tm_load_plugin(struct tm_api_registry_api* reg, bool load)
 {
     tm_global_api_registry = reg;
 
+    tm_logger_api = reg->get(TM_LOGGER_API_NAME);
     tm_draw2d_api = reg->get(TM_DRAW2D_API_NAME);
     tm_ui_api = reg->get(TM_UI_API_NAME);
 

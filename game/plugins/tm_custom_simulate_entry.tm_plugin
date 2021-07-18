@@ -1,0 +1,6 @@
+__type: "tm_plugin"
+__uuid: "99c80d4d-488c-aeb7-a9be-9c4380bf3d0f"
+import_on_change: true
+windows_dll_import_path: "C:\\gamedev\\machinery\\next_hex\\plugins\\custom_sim\\bin\\Debug\\tm_custom_simulate_entry.dll"
+windows_dll: "26cb8ed5a9e89294"
+__asset_uuid: "7e5e8718-59da-f819-e394-1a4c52d7b98a"
